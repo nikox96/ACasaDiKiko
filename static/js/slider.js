@@ -154,9 +154,7 @@ $(document).ready(function () {
     function changeImage(i) {
 
         next = actual + i;
-        console.log("actual: " + next + " image_src: " + imageArray[next - 1].src);
-        console.log("css: " + imageArrayCss[next-1]);
-
+        
         if (next != length + 1 && next > 0) {
 
             //$("#main-pic").attr("style", "visibility: hidden");
