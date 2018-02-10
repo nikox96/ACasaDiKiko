@@ -222,9 +222,20 @@ $(document).ready(function () {
 
         if (next != length + 1 && next > 0) {
 
-            $("#main-pic").attr("style", "visibility: hidden");
+            //$("#main-pic").attr("style", "visibility: hidden");
 
-            $('#main-pic').attr('src', './static/images/' + next + '.jpg');
+            $("#main-pic").fadeOut(600, function(){
+                var promise = new Promise( function(resolve, reject){
+                    $('#main-pic').attr('src', './static/images/' + next + '.jpg');
+                    resolve("fatto");
+                }).then( done => {
+                    $("#main-pic").fadeIn('slow', function(){
+                        //mostra l'immagine
+                    });
+                });
+
+            });
+
 
             // setImageOrientation($('#main-pic'));
 
@@ -290,26 +301,15 @@ $(document).ready(function () {
     }
 
     function showStartIcon() {
-        slideShowStop.css({ "display": "none" });
-        slideShowStart.css({ "display": "block" });
+        slideShowStop.fadeOut('fast', function () {
+            slideShowStart.fadeIn('fast', function () { });
+        });
     }
 
     function showPauseIcon() {
-        slideShowStart.css({ "display": "none" });
-        slideShowStop.css({ "display": "block" });
+        slideShowStart.fadeOut('fast', function () {
+            slideShowStop.fadeIn('fast', function () { });
+        });
     }
 
-    /**
-     * HIDE AND SHOW ACTION BUTTON
-     
-    $('#main-pic').hover(showButton, hideButton);
-
-    function showButton() {
-        console.log("show button");
-    }
-
-    function hideButton() {
-        setTimeout(console.log("hide button"), 2000);
-    }
-    */
 });
