@@ -1,16 +1,15 @@
-//update var length with the number of your photos
 
 //280118    var length = 26;
 var length = 33;    //280118
+var path = "./static/images/";
 
 var css;
 
+var actual = 1;
+var next;
+
 
 $(document).ready(function () {
-
-    var actual = 1;
-
-    var next;
 
 
     //set the first image thumb to active
@@ -92,25 +91,28 @@ $(document).ready(function () {
     // console.log("numero di immagini: " + images_number); 
 
     var load_counter = 0;
-
+    var firstTime = false;
 
     $('.slideshow-container img').on('load', function () {
 
-        setImageOrientation($('#main-pic'));
+        if (!firstTime) {
+            console.log("setImageOrientation: load");
 
-        $("#main-pic").attr("style", "visibility: visible" + css);
+            setImageOrientation($('#main-pic'));
 
-        load_counter++;
+            $("#main-pic").attr("style", "visibility: visible" + css);
 
-        if (images_number == load_counter) {
+            load_counter++;
 
-            $('.loading').hide();
+            if (images_number == load_counter) {
 
-            $('.slideshow').fadeIn('slow');
+                $('.loading').hide();
 
-            //nico$('.phototumbnails').fadeIn('slow');
+                $('.slideshow').fadeIn('slow');
 
-
+                //nico$('.phototumbnails').fadeIn('slow');
+                firstTime = true;
+            }
         }
 
     }).each(function () {
@@ -146,94 +148,26 @@ $(document).ready(function () {
         };nico*/
 
 
-    var isChanged = false;
 
-    function setImageOrientation(image) {
-
-        var img = new Image();
-
-        css = "";
-
-        img.src = image.attr('src');
-
-        var imageHeight = img.height;
-
-        var imageWidth = img.width;
-
-        console.log("image: " + imageHeight + " " + imageWidth);
-
-        //280118    if(imageWidth > imageHeight && next != 2 && next != 6 && next != 9 && next != 12 && next != 22 && next != 23 && next != 24 && next != 25){
-        if (imageWidth > imageHeight && next != 2 && next != 7 && next != 10 && next != 15 && next != 28 && next != 29 && next != 30) {   //280118
-
-            if (isChanged) {
-
-                //image.css("transform", "rotate(0)");
-
-                css = ";transform:rotate(0deg);";
-
-                isChanged = false;
-
-            }
-
-        } else {
-
-            changeOrientation(image);
-
-            return;
-
-        }
-
-    };
-
-
-    function changeOrientation(image) {
-
-        console.log("cambio orientamento");
-
-        if (next == 99) {
-
-            //image.css("transform", "rotate(90deg)");
-
-            css = ";transform:rotate(90deg);";
-
-            //280118    } else if (next == 2 || next == 6 || next == 9 || next == 12 || next == 22 || next == 23 || next == 24 || next == 25){
-        } else if (next == 2 || next == 7 || next == 10 || next == 15 || next == 28 || next == 29 || next == 30) {  //280118
-
-            //image.css("transform", "rotate(-90deg)");
-
-            css = ";transform:rotate(-90deg);";
-
-        } else {
-
-            //image.css("transform", "rotate(0)");
-
-            css = ";transform:rotate(0deg);";
-
-        }
-
-        isChanged = true;
-
-    };
 
 
     function changeImage(i) {
 
         next = actual + i;
+        console.log("actual: " + next + " image_src: " + imageArray[next - 1].src);
+        console.log("css: " + imageArrayCss[next-1]);
 
         if (next != length + 1 && next > 0) {
 
             //$("#main-pic").attr("style", "visibility: hidden");
 
-            $("#main-pic").fadeOut(600, function(){
-                var promise = new Promise( function(resolve, reject){
-                    $('#main-pic').attr('src', './static/images/' + next + '.jpg');
-                    resolve("fatto");
-                }).then( done => {
-                    $("#main-pic").fadeIn('slow', function(){
-                        //mostra l'immagine
-                    });
+            $("#main-pic").fadeOut(600, function () {
+                $('#main-pic').css({
+                    'display': 'none',
+                    'transform': imageArrayCss[next - 1]
+                }).attr('src', imageArray[next - 1].src);
+                $("#main-pic").fadeIn('slow', function () {
                 });
-
             });
 
 
