@@ -95,8 +95,10 @@ $(document).ready(function () {
 
     $('.slideshow-container img').on('load', function () {
 
+        // il first time serve per fars si che questa funziona venga caricata
+        // solo al primo avvio della pagina e non ogni volta che viene registrato un evento
+        // 'load' sul contentore "#main-pic"
         if (!firstTime) {
-            console.log("setImageOrientation: load");
 
             setImageOrientation($('#main-pic'));
 
