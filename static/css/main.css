@@ -234,7 +234,7 @@ body::-webkit-scrollbar {
 
 .slideshow{
 
-    height: 75%;
+    height: 95%;
 
     width: 100%;
 
@@ -400,9 +400,11 @@ img{
     
     padding-top: 5%; 
     
-    /*height: 30*/
+    /*height: 35*/
 
-    width: 5%; /*45*/
+    width: 5%; /*35*/
+	
+	max-width: 40px;
 
     z-index: 10;
 
@@ -462,7 +464,7 @@ img{
 
     left: 50%;
 
-    bottom: 10%;
+    bottom: 2%;
 
 }
 
@@ -474,7 +476,7 @@ img{
 
     left: 50%;
 
-    bottom: 10%;
+    bottom: 2%;
 
 }
 
