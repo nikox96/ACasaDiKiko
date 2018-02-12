@@ -397,10 +397,12 @@ img{
 .slide-icon{
 
     display: block;
+    
+    padding-top: 5%; 
+    
+    /*height: 30*/
 
-    height: 35px; /*30*/
-
-    width: 35px; /*24*/
+    width: 5%; /*45*/
 
     z-index: 10;
 
