@@ -38,7 +38,9 @@ body{
 
 }
 
-
+.ui-page, .ui-page-theme-a, .ui-page-active{
+    height: 100%;
+}
 
 /* ### classi generali ###*/
 

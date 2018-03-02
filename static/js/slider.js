@@ -156,7 +156,7 @@ $(document).ready(function () {
     function changeImage(i) {
 
         next = actual + i;
-        
+
         if (next != length + 1 && next > 0) {
 
             //$("#main-pic").attr("style", "visibility: hidden");
@@ -245,5 +245,32 @@ $(document).ready(function () {
             slideShowStop.fadeIn('fast', function () { });
         });
     }
+
+
+    /**
+     * SWIPE EVENT
+     */
+    
+    $('#main-pic').on("swipeleft", function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        leftHandler();
+    });
+
+    $('#main-pic').on("swiperight", function (event) {
+        event.stopPropagation();
+        event.preventDefault();
+        rightHandler();
+    });
+    
+
+    function leftHandler() {
+        changeImage(-1);
+    }
+
+    function rightHandler() {
+        changeImage(+1);
+    }
+    
 
 });
