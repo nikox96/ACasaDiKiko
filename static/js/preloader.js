@@ -21,7 +21,7 @@ for (var i = 1; i <= length; i++) {
     image_preload.src = name;
 
     setImageOrientation(image_preload).then(css => {
-        
+
         imageArrayCss.push(css);
     });
 }
@@ -30,14 +30,14 @@ for (var i = 1; i <= length; i++) {
 function setImageOrientation(image) {
     var css = "";
     var promise = new Promise(function (resolve, reject) {
-        if (preloadNext == 99) {
+        if (preloadNext === 99) {
 
             //image.css("transform", "rotate(90deg)");
 
             css = "rotate(90deg)";
 
             //280118    } else if (preloadNext == 2 || preloadNext == 6 || preloadNext == 9 || preloadNext == 12 || preloadNext == 22 || preloadNext == 23 || preloadNext == 24 || preloadNext == 25){
-        } else if (preloadNext == 2 || preloadNext == 7 || preloadNext == 10 || preloadNext == 15 || preloadNext == 28 || preloadNext == 29 || preloadNext == 30) {  //280118
+        } else if (preloadNext === 2 || preloadNext === 7 || preloadNext === 10 || preloadNext === 15 || preloadNext === 28 || preloadNext === 29 || preloadNext === 30) {  //280118
 
             //image.css("transform", "rotate(-90deg)");
 

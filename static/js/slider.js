@@ -1,276 +1,1 @@
-
-//280118    var length = 26;
-var length = 33;    //280118
-var path = "./static/images/";
-
-var css;
-
-var actual = 1;
-var next;
-
-
-$(document).ready(function () {
-
-
-    //set the first image thumb to active
-
-    //nico$('#1').addClass('thumb-active');
-
-
-    //load the next image
-
-    $('.next').click(function () {
-
-        if (isInSlideShowMode) {
-            isInSlideShowMode = false;
-            showStartIcon();
-        }
-
-        changeImage(1);
-
-    });
-
-
-    //load previous image
-
-    $('.back').click(function () {
-
-        if (isInSlideShowMode) {
-            isInSlideShowMode = false;
-            showStartIcon();
-
-        }
-
-        changeImage(-1);
-
-    });
-
-
-    //set the main pic base on the thumb that is clicked
-
-    /*nico
-
-        $('.thumb').click(function(){
-
-            updateSliderPosition($(this));
-
-            var id = parseInt(this.id);
-
-
-
-            $('#main-pic').attr('src','./static/images/' + id +'.jpg');
-
-            next=id;
-
-            setImageOrientation($('#main-pic'));
-
-
-
-            $('#' + actual).removeClass('thumb-active');
-
-            $('#' + id).addClass('thumb-active');
-
-            actual = id;
-
-        });
-
-    nico*/
-
-
-    //show the slideshow only when its image are full loaded
-
-    $('.slideshow').toggle();
-
-    //nico$('.phototumbnails').toggle();
-
-    $('.loading').show();
-
-
-    var images_number = $('.slideshow-container img').length;
-
-    // console.log("numero di immagini: " + images_number); 
-
-    var load_counter = 0;
-    var firstTime = false;
-
-    $('.slideshow-container img').on('load', function () {
-
-        // il first time serve per fars si che questa funziona venga caricata
-        // solo al primo avvio della pagina e non ogni volta che viene registrato un evento
-        // 'load' sul contentore "#main-pic"
-        if (!firstTime) {
-
-            setImageOrientation($('#main-pic'));
-
-            $("#main-pic").attr("style", "visibility: visible" + css);
-
-            load_counter++;
-
-            if (images_number == load_counter) {
-
-                $('.loading').hide();
-
-                $('.slideshow').fadeIn('slow');
-
-                //nico$('.phototumbnails').fadeIn('slow');
-                firstTime = true;
-            }
-        }
-
-    }).each(function () {
-
-        if (('.slideshow').complete /*nico&& ('phototumbnails').completenico*/) {
-
-            $('.slideshow').trigger('load');
-
-            //nico$('.phototumbnails').trigger('load');
-
-
-        }
-
-    });
-
-
-    //move the thumbnails slider base on the photo selected
-
-    /*nico
-
-        function updateSliderPosition(thumb){
-
-            var objectWidth = thumb.width();
-
-            var objectId = thumb.attr("id");
-
-            $('.dx').animate({
-
-                scrollLeft: (objectId-1)*180
-
-                }, 800);
-
-        };nico*/
-
-
-
-
-
-    function changeImage(i) {
-
-        next = actual + i;
-
-        if (next != length + 1 && next > 0) {
-
-            //$("#main-pic").attr("style", "visibility: hidden");
-
-            $("#main-pic").fadeOut(600, function () {
-                $('#main-pic').css({
-                    'display': 'none',
-                    'transform': imageArrayCss[next - 1]
-                }).attr('src', imageArray[next - 1].src);
-                $("#main-pic").fadeIn('slow', function () {
-                });
-            });
-
-
-            // setImageOrientation($('#main-pic'));
-
-
-            //nico$('#' + next).addClass('thumb-active');
-
-            //nicoupdateSliderPosition($('#' + next));
-
-
-            //nico$('#' + actual).removeClass('thumb-active');
-
-            actual = next;
-
-        } else {
-
-            isInSlideShowMode = false;
-            actual = 0;
-            changeImage(+1);
-            showStartIcon();
-
-        }
-
-    };
-
-    /**
-     * SLIDESHOW
-     */
-
-    var slideShowStart = $('#slideshow-start');
-    var slideShowStop = $('#slideshow-stop');
-
-    var isInSlideShowMode = false;
-    // change this to set time between two photos
-    var changeImageTime = 2000;
-
-    slideShowStart.click(function () {
-        isInSlideShowMode = true;
-
-        showPauseIcon()
-
-        startSlideShow();
-
-    });
-
-    slideShowStop.click(function () {
-
-        isInSlideShowMode = false;
-
-        showStartIcon();
-
-    });
-
-    function startSlideShow() {
-
-        var refreshIntervalId = setInterval(function () {
-            if (isInSlideShowMode) {
-                changeImage(+1);
-            } else {
-                showStartIcon();
-                clearInterval(refreshIntervalId);
-            }
-        }, 2000);
-    }
-
-    function showStartIcon() {
-        slideShowStop.fadeOut('fast', function () {
-            slideShowStart.fadeIn('fast', function () { });
-        });
-    }
-
-    function showPauseIcon() {
-        slideShowStart.fadeOut('fast', function () {
-            slideShowStop.fadeIn('fast', function () { });
-        });
-    }
-
-
-    /**
-     * SWIPE EVENT
-     */
-    
-    $('#main-pic').on("swipeleft", function (event) {
-        event.stopPropagation();
-        event.preventDefault();
-        leftHandler();
-    });
-
-    $('#main-pic').on("swiperight", function (event) {
-        event.stopPropagation();
-        event.preventDefault();
-        rightHandler();
-    });
-    
-
-    function leftHandler() {
-        changeImage(-1);
-    }
-
-    function rightHandler() {
-        changeImage(+1);
-    }
-    
-
-});
+//280118    var length = 26;var length = 33;    //280118var path = "./static/images/";var css, mainpicH, mainpicW, mainpicOutW, marginLeft, marginRight, mainpicFirstMR, mainpicFirstML, mainpicFirstW,    mainpicFirstH;var actual = 1;var next;var load_counter = 0;var firstTime = false;var firstTimeFirstImage = true;/*var slideShowStart = $('#slideshow-start');var slideShowStop = $('#slideshow-stop');*/var isInSlideShowMode = false;// change this to set time between two photosvar changeImageTime = 5000;$(document).on('ready', function () {    //set the first image thumb to active    //nico$('#1').addClass('thumb-active');	    if ("ontouchstart" in document.documentElement) {        $(".next").css('visibility', 'hidden');        $(".back").css('visibility', 'hidden');    }    //load the next image    $('.next').on('click', function () {        if (isInSlideShowMode) {            isInSlideShowMode = false;            showStartIcon();        }        changeImage(1);    });    //load previous image    $('.back').on('click', function () {        if (isInSlideShowMode) {            isInSlideShowMode = false;            showStartIcon();        }        changeImage(-1);    });    $('#slideshow-start').on('click', function () {        //slideShowStart.click(function () {        isInSlideShowMode = true;        showPauseIcon();        startSlideShow();    });    $('#slideshow-stop').on('click', function () {        //slideShowStop.click(function () {        isInSlideShowMode = false;        showStartIcon();    });    //set the main pic base on the thumb that is clicked    /*nico        $('.thumb').click(function(){            updateSliderPosition($(this));            var id = parseInt(this.id);            $('#main-pic').attr('src','./static/images/' + id +'.jpg');            next=id;            setImageOrientation($('#main-pic'));            $('#' + actual).removeClass('thumb-active');            $('#' + id).addClass('thumb-active');            actual = id;        });    nico*/    //show the slideshow only when its image are full loaded    $('.slideshow').toggle();    //nico$('.phototumbnails').toggle();    $('.loading').show();    var images_number = $('.slideshow-container img').length;    // console.log("numero di immagini: " + images_number);    $('.slideshow-container img').on('load', function () {        // il first time serve per far si che questa funzione venga caricata        // solo al primo avvio della pagina e non ogni volta che viene registrato un evento        // 'load' sul contentore "#main-pic"        if (!firstTime) {            //setImageOrientation($('#main-pic'));            $("#main-pic").attr("style", "visibility: visible" + css);            load_counter++;            if (images_number == load_counter) {                $('.loading').hide(function () {                    $('.slideshow').fadeIn('slow', function () {                        isInSlideShowMode = true;                        //showStartIcon();                        showPauseIcon();                        startSlideShow();                    });                });                //nico$('.phototumbnails').fadeIn('slow');                firstTime = true;            }        }    }).each(function () {        if (('.slideshow').complete /*nico&& ('phototumbnails').completenico*/) {            $('.slideshow').trigger('load');            //nico$('.phototumbnails').trigger('load');        }    });    //move the thumbnails slider base on the photo selected    /*nico        function updateSliderPosition(thumb){            var objectWidth = thumb.width();            var objectId = thumb.attr("id");            $('.dx').animate({                scrollLeft: (objectId-1)*180                }, 800);        };nico*/    function changeImage(i) {        next = actual + i;        if (next !== length + 1 && next > 0) {            if (firstTimeFirstImage) {                mainpicFirstH = $('#main-pic').height();                mainpicFirstW = $('#main-pic').width();                mainpicFirstMR = parseFloat($('#main-pic').css('margin-left').replace(/[^-\d\.]/g, ''));                mainpicFirstML = parseFloat($('#main-pic').css('margin-right').replace(/[^-\d\.]/g, ''));                firstTimeFirstImage = false;            }            //$("#main-pic").attr("style", "visibility: hidden");            mainpicH = $('#main-pic').height();            $("#main-pic").css({                'height': mainpicH + 'px'            });            if (i > 0) {                $("#main-pic").animate({'margin': '0', 'width': 'toggle'}, 'fast', function () {                    //$('#main-pic').animate({'width': 'toggle'}, 'slow', function () {                    $('#main-pic').css({                        'display': 'none',                        'margin': '0 0 0 auto',                        'transform': imageArrayCss[next - 1]                    }).attr('src', imageArray[next - 1].src);                    mainpicW = $('#main-pic').width();                    $('#main-pic').css({                        'display': 'block',                        'width': '0px'                    });                    $('#main-pic').animate({                        'width': mainpicW + 'px', 'margin-left': mainpicFirstML - ((mainpicFirstW - mainpicW) / 2),                        'margin-right': mainpicFirstMR - ((mainpicFirstW - mainpicW) / 2)                    }, 'slow', function () {                        $('#main-pic').css({                            'margin': '0 auto 0 auto',                            'height': '100%',							'width': 'auto'                        });                    });                });            } else if (i < 0) {                $("#main-pic").animate({'margin': '0 0 0 auto', 'width': 'toggle'}, 'fast', function () {                    $('#main-pic').css({                        'display': 'none',                        'margin': '0 auto 0 0',                        'transform': imageArrayCss[next - 1]                    }).attr('src', imageArray[next - 1].src);                    mainpicW = $('#main-pic').width();                    $('#main-pic').css({                        'display': 'block',                        'width': '0px'                    });                    $('#main-pic').animate({                        'width': mainpicW + 'px', 'margin-left': mainpicFirstML - ((mainpicFirstW - mainpicW) / 2),                        'margin-right': mainpicFirstMR - ((mainpicFirstW - mainpicW) / 2)                    }, 'slow', function () {                        $('#main-pic').css({                            'margin': '0 auto 0 auto',                            'height': '100%',							'width': 'auto'                        });                        //});                    });                    //});                });            }            // setImageOrientation($('#main-pic'));            //nico$('#' + next).addClass('thumb-active');            //nicoupdateSliderPosition($('#' + next));            //nico$('#' + actual).removeClass('thumb-active');            actual = next;        } else {            isInSlideShowMode = false;            actual = 0;            changeImage(+1);            showStartIcon();        }    }    /**     * SLIDESHOW     */    function startSlideShow() {        var refreshIntervalId = setInterval(function () {            if (isInSlideShowMode) {                changeImage(+1);            } else {                showStartIcon();                clearInterval(refreshIntervalId);            }        }, 5000);    }    function showStartIcon() {        $('#slideshow-stop').fadeOut('slow').promise().done(function () {            $('#slideshow-start').fadeIn('slow');        });    }    function showPauseIcon() {        $('#slideshow-start').fadeOut('slow').promise().done(function () {            $('#slideshow-stop').fadeIn('slow');        });    }    /**     * SWIPE EVENT     */    $('#main-pic').on("swipeleft", function (event) {        event.stopPropagation();        event.preventDefault();        leftHandler();    });    $('#main-pic').on("swiperight", function (event) {        event.stopPropagation();        event.preventDefault();        rightHandler();    });    function leftHandler() {		if (isInSlideShowMode) {            isInSlideShowMode = false;            showStartIcon();        }        changeImage(+1);    }    function rightHandler() {		if (isInSlideShowMode) {            isInSlideShowMode = false;            showStartIcon();        }        changeImage(-1);    }});

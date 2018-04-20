@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="PublishConfigData" serverName="acasadikiko.it">
+    <serverData>
+      <paths name="acasadikiko.it">
+        <serverdata>
+          <mappings>
+            <mapping deploy="/" local="$PROJECT_DIR$/../Galleria_WebStorm" web="galleria.html" />
+          </mappings>
+          <excludedPaths>
+            <excludedPath path="/acasadikiko.it_Backup_Giornaliero" />
+            <excludedPath path="/acasadikiko.it_Backup_Settimanale" />
+            <excludedPath path="/www.acasadikiko.it/cgi-bin" />
+            <excludedPath path="/www.acasadikiko.it/softaculous" />
+            <excludedPath path="/www.acasadikiko.it/wp" />
+          </excludedPaths>
+        </serverdata>
+      </paths>
+    </serverData>
+  </component>
+</project>

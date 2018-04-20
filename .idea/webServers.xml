@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="WebServers">
+    <option name="servers">
+      <webServer id="f78a3dc3-8ce9-4cad-8a5d-669b1bbc50cf" name="acasadikiko.it" url="http://acasadikiko.it">
+        <fileTransfer host="ftp.acasadikiko.it" port="21">
+          <advancedOptions>
+            <advancedOptions dataProtectionLevel="Private" />
+          </advancedOptions>
+          <option name="port" value="21" />
+        </fileTransfer>
+      </webServer>
+    </option>
+  </component>
+</project>
